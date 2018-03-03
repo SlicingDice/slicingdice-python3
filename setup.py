@@ -11,7 +11,7 @@ setup(
     version="2.0.1",
     author="SlicingDice LLC",
     author_email="help@slicingdice.com",
-    description="Official Python client for SlicingDice, Data Warehouse and "
+    description="Official Python 3 client for SlicingDice, Data Warehouse and "
                 "Analytics Database as a Service.",
     install_requires=["aiohttp", "six", "ujson"],
     license="BSD",
@@ -24,7 +24,7 @@ setup(
     package_dir={'pyslicer': 'pyslicer'},
     long_description=read('README.md'),
     classifiers=[
-        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.5",
         "Topic :: Scientific/Engineering :: Information Analysis",
     ],
 )
