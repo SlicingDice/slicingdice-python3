@@ -2,11 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-import ujson
-import requests
 
 from . import exceptions
-from .core.handler_response import SDHandlerResponse
 from .core.requester import Requester
 
 
@@ -33,16 +30,6 @@ class SlicingDiceAPI(object):
             master_key, custom_key, read_key, write_key)
         self._api_key = self._get_key()[0]
         self._requester = Requester(use_ssl, timeout)
-        self.__status_code = None
-        self.__headers = None
-
-    @property
-    def status_code(self):
-        return self.__status_code
-
-    @property
-    def headers(self):
-        return self.__headers
 
     @staticmethod
     def _organize_keys(master_key, custom_key, read_key, write_key):
@@ -122,24 +109,3 @@ class SlicingDiceAPI(object):
 
         status, result = await req
         return result
-
-    @staticmethod
-    def _check_request(request):
-        """Check if the request was successful
-
-        Keyword arguments:
-        request -- A object request result
-        """
-        if request.status_code is not requests.codes.ok:
-            raise exceptions.SlicingDiceHTTPError(
-                "HTTP status code: {}".format(request.status_code))
-        return True
-
-    def _set_properties_values(self, sd_response):
-        """Set current status code and header request response in objects
-
-        Keyword arguments:
-        sd_response -- A request object
-        """
-        self.__status_code = int(sd_response.status_code)
-        self.__headers = dict(sd_response.headers)
