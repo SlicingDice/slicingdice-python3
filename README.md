@@ -34,9 +34,11 @@ If this is the first register ever entered into the system,
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
 
 # Configure the client
 client = SlicingDice(master_key='API_KEY')
+loop = asyncio.get_event_loop()
 
 # Inserting data
 insert_data = {
@@ -45,7 +47,7 @@ insert_data = {
     },
     "auto-create": ["dimension", "column"]
 }
-client.insert(insert_data)
+loop.run_until_complete(client.insert(insert_data))
 
 # Querying data
 query_data = {
@@ -61,7 +63,7 @@ query_data = {
         }
     ]
 }
-print(client.count_entity(query_data))
+print(loop.run_until_complete(client.count_entity(query_data)))
 ```
 
 ## Reference
@@ -89,8 +91,10 @@ Get information about current database(related to api keys informed on construct
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
 client = SlicingDice('MASTER_API_KEY')
-print(client.get_database())
+loop = asyncio.get_event_loop()
+print(loop.run_until_complete(client.get_database()))
 ```
 
 #### Output example
@@ -115,8 +119,12 @@ Get all created columns, both active and inactive ones. This method corresponds 
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_API_KEY')
-print(client.get_columns())
+loop = asyncio.get_event_loop()
+
+print(loop.run_until_complete(client.get_columns()))
 ```
 
 #### Output example
@@ -154,7 +162,11 @@ Create a new column. This method corresponds to a [POST request at /column](http
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_API_KEY')
+loop = asyncio.get_event_loop()
+
 column = {
     "name": "Year",
     "api-name": "year",
@@ -162,7 +174,7 @@ column = {
     "description": "Year of manufacturing",
     "storage": "latest-value"
 }
-print(client.create_column(column))
+print(loop.run_until_complete(client.create_column(column)))
 ```
 
 #### Output example
@@ -181,7 +193,11 @@ Insert data to existing entities or create new entities, if necessary. This meth
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_WRITE_API_KEY')
+loop = asyncio.get_event_loop()
+
 insert_data = {
     "user1@slicingdice.com": {
         "car-model": "Ford Ka",
@@ -217,7 +233,7 @@ insert_data = {
     },
     "auto-create": ["dimension", "column"]
 }
-print(client.insert(insert_data))
+print(loop.run_until_complete(client.insert(insert_data)))
 ```
 
 #### Output example
@@ -238,13 +254,17 @@ Verify which entities exist in a dimension (uses `default` dimension if not prov
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
+
 ids = [
     "user1@slicingdice.com",
     "user2@slicingdice.com",
     "user3@slicingdice.com"
 ]
-print(client.exists_entity(ids))
+print(loop.run_until_complete(client.exists_entity(ids)))
 ```
 
 #### Output example
@@ -270,9 +290,11 @@ Count the number of inserted entities in the whole database. This method corresp
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 
-print(client.count_entity_total())
+print(loop.run_until_complete(client.count_entity_total()))
 ```
 
 #### Output example
@@ -294,11 +316,14 @@ Count the total number of inserted entities in the given dimensions. This method
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 
 dimensions = ['default']
 
-print(client.count_entity_total(dimensions))
+print(loop.run_until_complete(client.count_entity_total(dimensions)))
 ```
 
 #### Output example
@@ -320,7 +345,11 @@ Count the number of entities matching the given query. This method corresponds t
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
+
 query = [
     {
         "query-name": "corolla-or-fit",
@@ -351,7 +380,7 @@ query = [
         "bypass-cache": False
     }
 ]
-print(client.count_entity(query))
+print(loop.run_until_complete(client.count_entity(query)))
 ```
 
 #### Output example
@@ -374,7 +403,11 @@ Count the number of occurrences for time-series events matching the given query.
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
+
 query = [
     {
         "query-name": "test-drives-in-ny",
@@ -407,7 +440,7 @@ query = [
         "bypass-cache": True
     }
 ]
-print(client.count_event(query))
+print(loop.run_until_complete(client.count_event(query)))
 ```
 
 #### Output example
@@ -430,7 +463,10 @@ Return the top values for entities matching the given query. This method corresp
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 query = {
     "car-year": {
         "year": 2
@@ -439,7 +475,7 @@ query = {
         "car-model": 3
     }
 }
-print(client.top_values(query))
+print(loop.run_until_complete(client.top_values(query)))
 ```
 
 #### Output example
@@ -488,7 +524,10 @@ Return the aggregation of all columns in the given query. This method correspond
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 query = {
     "query": [
         {
@@ -500,7 +539,7 @@ query = {
         }
     ]
 }
-print(client.aggregation(query))
+print(loop.run_until_complete(client.aggregation(query)))
 ```
 
 #### Output example
@@ -537,8 +576,11 @@ Get all saved queries. This method corresponds to a [GET request at /query/saved
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_API_KEY')
-print(client.get_saved_queries())
+loop = asyncio.get_event_loop()
+print(loop.run_until_complete(client.get_saved_queries()))
 ```
 
 #### Output example
@@ -588,7 +630,10 @@ Create a saved query at SlicingDice. This method corresponds to a [POST request 
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_API_KEY')
+loop = asyncio.get_event_loop()
 query = {
     "name": "my-saved-query",
     "type": "count/entity",
@@ -607,7 +652,7 @@ query = {
     ],
     "cache-period": 100
 }
-print(client.create_saved_query(query))
+print(loop.run_until_complete(client.create_saved_query(query)))
 ```
 
 #### Output example
@@ -642,7 +687,10 @@ Update an existing saved query at SlicingDice. This method corresponds to a [PUT
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_API_KEY')
+loop = asyncio.get_event_loop()
 new_query = {
     "type": "count/entity",
     "query": [
@@ -660,7 +708,7 @@ new_query = {
     ],
     "cache-period": 100
 }
-print(client.update_saved_query('my-saved-query', new_query))
+print(loop.run_until_complete(client.update_saved_query('my-saved-query', new_query)))
 ```
 
 #### Output example
@@ -695,8 +743,11 @@ Executed a saved query at SlicingDice. This method corresponds to a [GET request
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
-print(client.get_saved_query('my-saved-query'))
+loop = asyncio.get_event_loop()
+print(loop.run_until_complete(client.get_saved_query('my-saved-query')))
 ```
 
 #### Output example
@@ -732,8 +783,11 @@ Delete a saved query at SlicingDice. This method corresponds to a [DELETE reques
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_API_KEY')
-print(client.delete_saved_query('my-saved-query'))
+loop = asyncio.get_event_loop()
+print(loop.run_until_complete(client.delete_saved_query('my-saved-query')))
 ```
 
 #### Output example
@@ -767,7 +821,10 @@ Retrieve inserted values for entities matching the given query. This method corr
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 query = {
     "query": [
         {
@@ -785,7 +842,7 @@ query = {
     "columns": ["car-model", "year"],
     "limit": 2
 }
-print(client.result(query))
+print(loop.run_until_complete(client.result(query)))
 ```
 
 #### Output example
@@ -815,7 +872,10 @@ Retrieve inserted values as well as their relevance for entities matching the gi
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 query = {
     "query": [
         {
@@ -833,7 +893,7 @@ query = {
     "columns": ["car-model", "year"],
     "limit": 2
 }
-print(client.score(query))
+print(loop.run_until_complete(client.score(query)))
 ```
 
 #### Output example
@@ -866,9 +926,12 @@ Retrieve inserted values using a SQL syntax. This method corresponds to a POST r
 
 ```python
 from pyslicer import SlicingDice
+import asyncio
+
 client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
 query = "SELECT COUNT(*) FROM default WHERE age BETWEEN 0 AND 49"
-print(client.sql(query))
+print(loop.run_until_complete(client.sql(query)))
 ```
 
 #### Output example
