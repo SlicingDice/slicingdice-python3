@@ -922,7 +922,7 @@ print(loop.run_until_complete(client.score(query)))
 ### `sql(query)`
 Retrieve inserted values using a SQL syntax. This method corresponds to a POST request at /query/sql.
 
-#### Request example
+#### Query statement
 
 ```python
 from pyslicer import SlicingDice
@@ -931,6 +931,17 @@ import asyncio
 client = SlicingDice('MASTER_OR_READ_API_KEY')
 loop = asyncio.get_event_loop()
 query = "SELECT COUNT(*) FROM default WHERE age BETWEEN 0 AND 49"
+print(loop.run_until_complete(client.sql(query)))
+```
+
+#### Insert statement
+```python
+from pyslicer import SlicingDice
+import asyncio
+
+client = SlicingDice('MASTER_OR_READ_API_KEY')
+loop = asyncio.get_event_loop()
+query = "INSERT INTO default([entity-id], name, age) VALUES(1, 'john', 10)"
 print(loop.run_until_complete(client.sql(query)))
 ```
 
