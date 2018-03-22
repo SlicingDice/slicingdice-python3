@@ -390,8 +390,8 @@ async def main():
         pass
 
     print('Results:')
-    print('  Successes:', sd_tester.num_successes)
-    print('  Fails:', sd_tester.num_fails)
+    print('Successes:', sd_tester.num_successes)
+    print('Fails:', sd_tester.num_fails)
 
     for failed_test in sd_tester.failed_tests:
         print('    - {}'.format(failed_test))
