@@ -1,0 +1,4 @@
+test:
+  override:
+    - mv tests_and_examples/examples/ .
+    - python tests_and_examples/run_query_tests.py
