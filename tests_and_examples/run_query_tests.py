@@ -373,10 +373,9 @@ async def main():
     # by enviroment variable
     # http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
     api_key = os.environ.get(
-        "SD_API_KEY",
-        ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
-        'eyJfX3NhbHQiOiJkZW1vMTkyM20iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyMTkyMywiY2xpZW50X2lkIjoxMH0.'
-        'WdcGPT3mQ06FxeMqsl2mTBMIdn0j0lOtjYVDNb_l0yc'))
+        "SD_API_KEY", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
+                      'eyJfX3NhbHQiOiJkZW1vNzA3OG0iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyNzA3OCwiY2xpZW50X2lkIjoxMH0.'
+                      'BR7Nm_AMWb0laZ9sgZWt5tDiqvoYk7LPMSQD4URT8Lg')
 
     # MODE_TEST give us if you want to use endpoint Test or Prod
     sd_tester = SlicingDiceTester(
