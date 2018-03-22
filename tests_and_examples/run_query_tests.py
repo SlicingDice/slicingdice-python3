@@ -29,10 +29,10 @@ from pyslicer import SlicingDice
 from pyslicer.exceptions import SlicingDiceException
 
 # Suppress HTTPS warnings
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+# import requests
+# from requests.packages.urllib3.exceptions import InsecureRequestWarning
+#
+# requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class SlicingDiceTester(object):
