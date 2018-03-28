@@ -150,12 +150,12 @@ class SlicingDiceTester(object):
         column -- Dictionary containing column data, such as "name" and
             "api-name".
         """
-        old_name = '"{}'.format(column['api-name'])
+        old_name = '{}'.format(column['api-name'])
 
         timestamp = self._get_timestamp()
         column['name'] += timestamp
         column['api-name'] += timestamp
-        new_name = '"{}'.format(column['api-name'])
+        new_name = '{}'.format(column['api-name'])
 
         self.column_translation[old_name] = new_name
 
