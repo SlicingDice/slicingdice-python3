@@ -37,6 +37,7 @@ from pyslicer.exceptions import SlicingDiceException
 
 class SlicingDiceTester(object):
     per_test_insertion = False
+    insert_sql_data = False
 
     """Test orchestration class."""
     def __init__(self, api_key, verbose=False):
@@ -70,7 +71,7 @@ class SlicingDiceTester(object):
         num_tests = len(test_data)
 
         self.per_test_insertion = "insert" in test_data[0]
-        if not self.per_test_insertion:
+        if not self.per_test_insertion and self.insert_sql_data:
             insertion_data = self.load_test_data(query_type, suffix="_insert")
             for insertion in insertion_data:
                 await self.client.insert(insertion)
@@ -373,9 +374,7 @@ async def main():
     # by enviroment variable
     # http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
     api_key = os.environ.get(
-        "SD_API_KEY", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
-                      'eyJfX3NhbHQiOiJkZW1vNzA3OG0iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyNzA3OCwiY2xpZW50X2lkIjoxMH0.'
-                      'BR7Nm_AMWb0laZ9sgZWt5tDiqvoYk7LPMSQD4URT8Lg')
+        "SD_API_KEY", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiIxNTIzMDY1ODQyNjU4IiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6MzA1MDgsImNsaWVudF9pZCI6MjAzfQ.R3oKwcA9XoQcW_QBxcvqUNJS44AqCKjoK2Hz5uBnxmU')
 
     # MODE_TEST give us if you want to use endpoint Test or Prod
     sd_tester = SlicingDiceTester(
