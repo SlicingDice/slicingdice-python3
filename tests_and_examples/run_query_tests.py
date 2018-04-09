@@ -37,6 +37,7 @@ from pyslicer.exceptions import SlicingDiceException
 
 class SlicingDiceTester(object):
     per_test_insertion = False
+    insert_sql_data = False
 
     """Test orchestration class."""
     def __init__(self, api_key, verbose=False):
@@ -70,7 +71,7 @@ class SlicingDiceTester(object):
         num_tests = len(test_data)
 
         self.per_test_insertion = "insert" in test_data[0]
-        if not self.per_test_insertion:
+        if not self.per_test_insertion and self.insert_sql_data:
             insertion_data = self.load_test_data(query_type, suffix="_insert")
             for insertion in insertion_data:
                 await self.client.insert(insertion)
