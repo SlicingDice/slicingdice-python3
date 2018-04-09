@@ -366,16 +366,14 @@ async def main():
         'aggregation',
         'score',
         'result',
-        # 'sql'
+        'sql'
     ]
 
     # Testing class with demo API key or one of your API key
     # by enviroment variable
     # http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
     api_key = os.environ.get(
-        "SD_API_KEY", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.'
-                      'eyJfX3NhbHQiOiJkZW1vNzA3OG0iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyNzA3OCwiY2xpZW50X2lkIjoxMH0.'
-                      'BR7Nm_AMWb0laZ9sgZWt5tDiqvoYk7LPMSQD4URT8Lg')
+        "SD_API_KEY", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiJkZW1vNzQ2MW0iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyNzQ2MSwiY2xpZW50X2lkIjoxMH0.Tw0ndNxB-uhm3H8eIcTMfU92xxeRJ_8vVSi29PDMW-0")
 
     # MODE_TEST give us if you want to use endpoint Test or Prod
     sd_tester = SlicingDiceTester(
