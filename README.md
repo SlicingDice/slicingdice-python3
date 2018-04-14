@@ -1,6 +1,6 @@
 # SlicingDice Official Python 3 Client (v2.0.1)
 
-Official Python client for [SlicingDice - Data Warehouse and Analytics Database as a Service](https://www.slicingdice.com/).
+Official Python 3 client for [SlicingDice - Data Warehouse and Analytics Database as a Service](https://www.slicingdice.com/).
 
 [SlicingDice](http://www.slicingdice.com/) is a serverless, SQL & API-based, easy-to-use and really cost-effective alternative to Amazon Redshift and Google BigQuery.
 
