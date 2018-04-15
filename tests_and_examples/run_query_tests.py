@@ -361,7 +361,7 @@ async def main():
         'aggregation',
         'score',
         'result',
-        # 'sql'
+        'sql'
     ]
 
     # Testing class with demo API key or one of your API key
