@@ -28,15 +28,10 @@ import ujson
 from pyslicer import SlicingDice
 from pyslicer.exceptions import SlicingDiceException
 
-# Suppress HTTPS warnings
-import requests
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
-
-requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-
 
 class SlicingDiceTester(object):
     per_test_insertion = False
+    insert_sql_data = False
 
     """Test orchestration class."""
     def __init__(self, api_key, verbose=False):
@@ -70,7 +65,7 @@ class SlicingDiceTester(object):
         num_tests = len(test_data)
 
         self.per_test_insertion = "insert" in test_data[0]
-        if not self.per_test_insertion:
+        if not self.per_test_insertion and self.insert_sql_data:
             insertion_data = self.load_test_data(query_type, suffix="_insert")
             for insertion in insertion_data:
                 await self.client.insert(insertion)
@@ -366,17 +361,14 @@ async def main():
         'aggregation',
         'score',
         'result',
-        # 'sql'
+        'sql'
     ]
 
     # Testing class with demo API key or one of your API key
     # by enviroment variable
     # http://panel.slicingdice.com/docs/#api-details-api-connection-api-keys-demo-key
     api_key = os.environ.get(
-        "SD_API_KEY",
-        ('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiIxNTE4NjA3ODQ0NDAz'
-         'IiwicGVybWlzc2lvbl9sZXZlbCI6MywicHJvamVjdF9pZCI6NDY5NjYsImNsaWVudF9pZ'
-         'CI6OTUxfQ.S6LCWQDcLS1DEFy3lsqk2jTGIe5rJ5fsQIvWuuFBdkw'))
+        "SD_API_KEY", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfX3NhbHQiOiJkZW1vNjMzMm0iLCJwZXJtaXNzaW9uX2xldmVsIjozLCJwcm9qZWN0X2lkIjoyNjMzMiwiY2xpZW50X2lkIjoxMH0.4pDXK04VJ0uezZLkSGBJoFD6E2RgKhLac2ryVjDyIVw')
 
     # MODE_TEST give us if you want to use endpoint Test or Prod
     sd_tester = SlicingDiceTester(
@@ -390,8 +382,8 @@ async def main():
         pass
 
     print('Results:')
-    print('  Successes:', sd_tester.num_successes)
-    print('  Fails:', sd_tester.num_fails)
+    print('Successes:', sd_tester.num_successes)
+    print('Fails:', sd_tester.num_fails)
 
     for failed_test in sd_tester.failed_tests:
         print('    - {}'.format(failed_test))
