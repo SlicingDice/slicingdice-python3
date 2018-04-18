@@ -15,4 +15,4 @@ class URLResources(object):
     QUERY_SAVED = "/query/saved/"
     QUERY_DATA_EXTRACTION_RESULT = "/data_extraction/result/"
     QUERY_DATA_EXTRACTION_SCORE = "/data_extraction/score/"
-    QUERY_SQL = "/query/sql/"
+    QUERY_SQL = "/sql/"
