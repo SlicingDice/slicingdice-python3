@@ -355,8 +355,6 @@ class SlicingDiceTester(object):
 
     @staticmethod
     def float_is_close(a, b, rel_tol=1e-09, abs_tol=0.0):
-        print(a)
-        print(b)
         return abs(a - b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 
