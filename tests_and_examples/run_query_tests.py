@@ -330,7 +330,7 @@ class SlicingDiceTester(object):
                     return False
 
             return True
-        if isinstance(expected, list):
+        elif isinstance(expected, list):
             if not isinstance(result, list):
                 return False
 
@@ -348,8 +348,16 @@ class SlicingDiceTester(object):
                     return False
 
             return True
+        elif isinstance(expected, float):
+            return SlicingDiceTester.float_is_close(expected, result)
 
         return expected == result
+
+    @staticmethod
+    def float_is_close(a, b, rel_tol=1e-09, abs_tol=0.0):
+        print(a)
+        print(b)
+        return abs(a - b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 
 async def main():
