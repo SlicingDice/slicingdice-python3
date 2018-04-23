@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="pyslicer",
-    version="2.0.1",
+    version="2.0.2",
     author="SlicingDice LLC",
     author_email="help@slicingdice.com",
     description="Official Python 3 client for SlicingDice, Data Warehouse and "
