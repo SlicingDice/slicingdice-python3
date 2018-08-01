@@ -72,6 +72,7 @@ class SlicingDiceTester(object):
             time.sleep(self.sleep_time)
 
         for i, test in enumerate(test_data):
+            _query_type = query_type
             self._empty_column_translation()
 
             print('({}/{}) Executing test "{}"'.format(i + 1, num_tests,
@@ -91,12 +92,64 @@ class SlicingDiceTester(object):
                         await self.create_columns(test)
                     await self.insert_data(test)
 
-                result = await self.execute_query(query_type, test)
+                if query_type in ('delete', 'update'):
+                    result = await self._run_additional_operations(query_type, test)
+                    if not result:
+                        continue
+                    _query_type = 'count_entity'
+
+                result = await self.execute_query(_query_type, test)
                 result = ujson.loads(result)
             except SlicingDiceException as e:
                 result = {'result': {'error': str(e)}}
+                if query_type in ('delete', 'update'):
+                    self.num_fails += 1
+                    self.failed_tests.append(test['name'])
 
-            await self.compare_result(query_type, test, result)
+                    print('  Result: {}'.format(result))
+                    print('  Status: Failed')
+                    continue                    
+
+            await self.compare_result(_query_type, test, result)
+
+    async def _run_additional_operations(self, query_type, test):
+        """Method used to run delete and update operations, this operations
+        are executed before the query and the result comparison"""
+        query_data = self._translate_column_names(test['additional_operation'])
+        if query_type == 'delete':
+            print('  Deleting')
+        else:
+            print('  Updating')
+
+        if self.verbose:
+            print('    - {}'.format(query_data))
+
+        result = None
+        if query_type == 'delete':
+            result = await self.client.delete(query_data)
+        elif query_type == 'update':
+            result = await self.client.update(query_data)
+        result = ujson.loads(result)
+
+        expected = self._translate_column_names(test['result_additional'])
+
+        for key, value in expected.items():
+            if value == 'ignore':
+                continue
+
+            if not self.compare_values(value, result[key]):
+                self.num_fails += 1
+                self.failed_tests.append(test['name'])
+
+                print('  Expected: "{}": {}'.format(key, value))
+                print('  Result:   "{}": {}'.format(key, result[key]))
+                print('  Status: Failed')
+                return False
+
+        self.num_successes += 1
+        print('  Status: Passed')
+
+        return True
 
     def _empty_column_translation(self):
         """Erase column translation table so tests don't interfere each
@@ -367,7 +420,9 @@ async def main():
         'aggregation',
         'score',
         'result',
-        'sql'
+        'sql',
+        'delete',
+        'update'
     ]
 
     # Testing class with demo API key or one of your API key
@@ -379,7 +434,7 @@ async def main():
     # MODE_TEST give us if you want to use endpoint Test or Prod
     sd_tester = SlicingDiceTester(
         api_key=api_key,
-        verbose=False)
+        verbose=True)
 
     try:
         for query_type in query_types:
