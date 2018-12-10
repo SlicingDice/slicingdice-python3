@@ -271,8 +271,8 @@ class ColumnValidator(SDBaseValidator):
             super(ColumnValidator, self).__init__(dictionary_column)
             self._valid_type_columns = [
                 "unique-id", "boolean", "string", "integer", "decimal",
-                "enumerated", "date", "integer-time-series",
-                "decimal-time-series", "string-time-series", "datetime"
+                "enumerated", "date", "integer-event",
+                "decimal-event", "string-event", "datetime"
             ]
 
     def _validate_name(self):
@@ -311,11 +311,11 @@ class ColumnValidator(SDBaseValidator):
 
     def _validate_column_decimal_type(self):
         """Validate column decimal type"""
-        decimal_types = ["decimal", "decimal-time-series"]
+        decimal_types = ["decimal", "decimal-event"]
         if self.data['type'] not in decimal_types:
             raise exceptions.InvalidColumnException(
                 "This column is only accepted on type 'decimal' or"
-                "'decimal-time-series'")
+                "'decimal-event'")
 
     def _check_str_type_integrity(self):
         """Check if column string type has everything you need"""
