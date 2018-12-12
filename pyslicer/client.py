@@ -372,3 +372,29 @@ class SlicingDice(SlicingDiceAPI):
             req_type="post",
             key_level=0,
             content_type='application/sql')
+
+    async def delete(self, query):
+        """ Make a delete request
+
+        :param query: The query that represents the data to be deleted
+        :return: The response from the SlicingDice
+        """
+        url = SlicingDice.BASE_URL + URLResources.DELETE
+        return await self._make_request(
+            url=url,
+            string_data=ujson.dumps(query),
+            req_type="post",
+            key_level=2)
+
+    async def update(self, query):
+        """ Make a update request
+
+        :param query: The query that represents the data to be updated
+        :return: The response from the SlicingDice
+        """
+        url = SlicingDice.BASE_URL + URLResources.UPDATE
+        return await self._make_request(
+            url=url,
+            string_data=ujson.dumps(query),
+            req_type="post",
+            key_level=2)
