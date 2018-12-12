@@ -95,3 +95,5 @@ ENV/
 
 # test file
 test.py
+
+*.DS_Store
