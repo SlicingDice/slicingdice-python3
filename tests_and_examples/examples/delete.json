@@ -1,0 +1,178 @@
+[
+  {
+    "name": "Test for a DELETION on a specific ENTITY ID.",
+    "description": "In this test we will delete a record based on the ENTITY ID.",
+    "columns": [
+      {
+        "type": "string",
+        "cardinality": "high",
+        "storage": "latest-value",
+        "name": "string_test_column",
+        "api-name": "string-test-column",
+        "dimension": "delete-test"
+      },
+      {
+        "storage": "latest-value",
+        "type": "integer",
+        "name": "integer_test_column",
+        "api-name": "integer-test-column",
+        "dimension": "delete-test"
+      }
+    ],
+    "insert": {
+      "Entity1": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity2": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity3": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity4": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity5": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity6": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      }
+    },
+    "additional_operation": {
+       "query":[
+          {
+            "entity-id":{
+              "equals":"Entity3"
+            }
+          }
+        ],
+        "dimension": "delete-test"
+    },
+    "result_additional": {
+      "status": "ignore",
+      "result": {
+        "deleted": 1
+      },
+      "took": "ignore"
+    },
+    "query": {
+      "query-name": "deleted_query",
+      "query": [
+        {
+          "string-test-column": {
+            "equals": "value:deleted_entity"
+          }
+        }
+      ],
+      "dimension": "delete-test"
+    },
+    "expected": {
+      "status": "ignore",
+      "result": {
+        "deleted_query": 5
+      },
+      "took": "ignore"
+    }
+  },
+  {
+    "name": "Test for a DELETION on multiple values.",
+    "description": "In this test we will delete a record based on a value from a column.",
+    "columns": [
+      {
+        "type": "string",
+        "cardinality": "high",
+        "storage": "latest-value",
+        "name": "string_test_column",
+        "api-name": "string-test-column",
+        "dimension": "delete-test"
+      },
+      {
+        "storage": "latest-value",
+        "type": "integer",
+        "name": "integer_test_column",
+        "api-name": "integer-test-column",
+        "dimension": "delete-test"
+      }
+    ],
+    "insert": {
+      "Entity1": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity2": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity3": {
+        "string-test-column": "value:deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity4": {
+        "string-test-column": "value:not_deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity5": {
+        "string-test-column": "value:not_deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      },
+      "Entity6": {
+        "string-test-column": "value:not_deleted_entity",
+        "integer-test-column": 1000001,
+        "dimension": "delete-test"
+      }
+    },
+    "additional_operation": {
+       "query":[
+          {
+            "string-test-column":{
+            "equals":"value:deleted_entity"
+          }
+        }
+      ],
+        "dimension": "delete-test"
+    },
+    "result_additional": {
+      "status": "ignore",
+      "result": {
+        "deleted": 3
+      },
+      "took": "ignore"
+    },
+    "query": {
+      "query-name": "deleted_query",
+      "query": [
+        {
+          "string-test-column": {
+            "equals": "value:deleted_entity"
+          }
+        }
+      ],
+        "dimension": "delete-test"
+    },
+    "expected": {
+      "status": "ignore",
+      "result": {
+        "deleted_query": 0
+      },
+      "took": "ignore"
+    }
+  }
+]

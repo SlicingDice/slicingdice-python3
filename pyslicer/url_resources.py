@@ -16,3 +16,5 @@ class URLResources(object):
     QUERY_DATA_EXTRACTION_RESULT = "/data_extraction/result/"
     QUERY_DATA_EXTRACTION_SCORE = "/data_extraction/score/"
     QUERY_SQL = "/sql/"
+    DELETE = "/delete/"
+    UPDATE = "/update/"
